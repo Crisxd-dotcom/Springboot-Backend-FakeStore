@@ -46,8 +46,6 @@ public class jwtFilter extends GenericFilter {
                 return;
             }
         }
-
-        // Si el token no está presente o es inválido, responder con JSON de error
         res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         res.setContentType("application/json");
         res.getWriter().write("{\"mensaje\": \"Acceso denegado: token inválido o ausente\"}");

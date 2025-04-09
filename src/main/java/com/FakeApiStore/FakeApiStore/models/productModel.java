@@ -1,6 +1,6 @@
 package com.FakeApiStore.FakeApiStore.models;
 
-public class productosModel {
+public class productModel {
     private Long id;
     private String title;
     private Double price;
@@ -56,15 +56,15 @@ public class productosModel {
         this.image = image;
     }
 
-    public static class ProductoSimplificado {
+    public static class SimplifiedProduct {
         private String title;
         private Double price;
-        private int cantidad;
+        private int quantity;
 
-        public ProductoSimplificado(String title, Double price, int cantidad) {
+        public SimplifiedProduct(String title, Double price, int quantity) {
             this.title = title;
             this.price = price;
-            this.cantidad = cantidad;
+            this.quantity = quantity;
         }
 
         public String getTitle() {
@@ -83,12 +83,12 @@ public class productosModel {
             this.price = price;
         }
 
-        public int getCantidad() {
-            return cantidad;
+        public int getQuantity() {
+            return quantity;
         }
 
-        public void setCantidad(int cantidad) {
-            this.cantidad = cantidad;
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
         }
     }
 }

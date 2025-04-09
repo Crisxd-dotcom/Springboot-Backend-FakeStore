@@ -4,31 +4,29 @@ import java.util.List;
 import java.util.UUID;
 
 public class orderModel {
-    private String idOrden;
-    private List<productosModel.ProductoSimplificado> productosSimplificados;
+    private String orderId;
+    private List<productModel.SimplifiedProduct> simplifiedProducts;
     private double total;
 
     // Constructor
     public orderModel() {
-        // Generar un UUID aleatorio para la orden
-        this.idOrden = UUID.randomUUID().toString();
+        this.orderId = UUID.randomUUID().toString();
     }
 
-    // Getters y setters
-    public String getIdOrden() {
-        return idOrden;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setIdOrden(String idOrden) {
-        this.idOrden = idOrden;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
-    public List<productosModel.ProductoSimplificado> getProductosSimplificados() {
-        return productosSimplificados;
+    public List<productModel.SimplifiedProduct> getSimplifiedProducts() {
+        return simplifiedProducts;
     }
 
-    public void setProductosSimplificados(List<productosModel.ProductoSimplificado> productosSimplificados) {
-        this.productosSimplificados = productosSimplificados;
+    public void setSimplifiedProducts(List<productModel.SimplifiedProduct> simplifiedProducts) {
+        this.simplifiedProducts = simplifiedProducts;
     }
 
     public double getTotal() {

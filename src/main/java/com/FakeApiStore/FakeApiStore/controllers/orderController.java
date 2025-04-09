@@ -1,6 +1,6 @@
 package com.FakeApiStore.FakeApiStore.controllers;
 
-import com.FakeApiStore.FakeApiStore.models.productosModel;
+import com.FakeApiStore.FakeApiStore.models.productModel;
 import com.FakeApiStore.FakeApiStore.models.orderModel;
 import com.FakeApiStore.FakeApiStore.services.ordernServices;
 import org.springframework.web.bind.annotation.*;
@@ -9,47 +9,46 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @RestController
-@RequestMapping("/ordenes")
+@RequestMapping("/orders")
 public class orderController {
 
-    private final ordernServices ordenService;
+    private final ordernServices ordernServices;
 
-    public orderController(ordernServices ordenService) {
-        this.ordenService = ordenService;
+    public orderController(ordernServices orderService) {
+        this.ordernServices = orderService;
     }
 
-    @PostMapping("/crear")
-    public orderModel crearOrden(@RequestBody List<Long> idsProductos) {
+    @PostMapping("/create")
+    public orderModel createOrder(@RequestBody List<Long> productIds) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://fakestoreapi.com/products/";
 
-        Map<Long, Integer> contadorProductos = new HashMap<>();
-        for (Long id : idsProductos) {
-            contadorProductos.put(id, contadorProductos.getOrDefault(id, 0) + 1);
+        Map<Long, Integer> productCount = new HashMap<>();
+        for (Long id : productIds) {
+            productCount.put(id, productCount.getOrDefault(id, 0) + 1);
         }
 
-        List<productosModel.ProductoSimplificado> productosSimplificados = new ArrayList<>();
+        List<productModel.SimplifiedProduct> simplifiedProducts = new ArrayList<>();
         double total = 0;
 
-        for (Map.Entry<Long, Integer> entry : contadorProductos.entrySet()) {
+        for (Map.Entry<Long, Integer> entry : productCount.entrySet()) {
             Long id = entry.getKey();
-            Integer cantidad = entry.getValue();
+            Integer quantity = entry.getValue();
 
-            productosModel producto = restTemplate.getForObject(url + id, productosModel.class);
-            if (producto != null) {
-                productosSimplificados.add(new productosModel.ProductoSimplificado(
-                        producto.getTitle(), producto.getPrice(), cantidad));
-                total += producto.getPrice() * cantidad;
+            productModel product = restTemplate.getForObject(url + id, productModel.class);
+            if (product != null) {
+                simplifiedProducts.add(new productModel.SimplifiedProduct(
+                        product.getTitle(), product.getPrice(), quantity));
+                total += product.getPrice() * quantity;
             }
         }
 
-        orderModel orden = new orderModel();
-        orden.setProductosSimplificados(productosSimplificados);
-        orden.setTotal(total);
+        orderModel order = new orderModel();
+        order.setSimplifiedProducts(simplifiedProducts);
+        order.setTotal(total);
 
-        // Guardar en el servicio compartido
-        ordenService.guardarOrden(orden.getIdOrden(), orden);
+        ordernServices.saveOrder(order.getOrderId(), order);
 
-        return orden;
+        return order;
     }
 }

@@ -8,13 +8,13 @@ import java.util.Map;
 
 @Service
 public class ordernServices {
-    private final Map<String, orderModel> ordenesDB = new HashMap<>();
+    private final Map<String, orderModel> ordersDB = new HashMap<>();
 
-    public void guardarOrden(String id, orderModel orden) {
-        ordenesDB.put(id, orden);
+    public void saveOrder(String id, orderModel order) {
+        ordersDB.put(id, order);
     }
 
-    public orderModel obtenerOrden(String id) {
-        return ordenesDB.get(id);
+    public orderModel getOrder(String id) {
+        return ordersDB.get(id);
     }
 }
